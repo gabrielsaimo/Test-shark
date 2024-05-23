@@ -1,0 +1,41 @@
+<div *ngIf="tasks$ | async as tasks" style="padding: 50px">
+  <br /><br />
+  <button nz-button nzType="primary" (click)="addTask()">
+    Adicionar Nova Tarefa
+  </button>
+  <br /><br />
+
+  <nz-table
+    #basicTable
+    [nzData]="(tasks$ | async) ?? []"
+    nzBordered
+    nzSize="middle"
+  >
+    <thead>
+      <tr>
+        <th nzWidth="20%">Título</th>
+        <th nzWidth="60%">Descrição</th>
+        <th nzWidth="20%">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let task of tasks$ | async">
+        <td>{{ task.title }}</td>
+        <td>{{ task.description }}</td>
+        <td>
+          <a nz-button nzType="default" (click)="editTask(task.id ?? 0)"
+            >Editar</a
+          >
+          <nz-divider nzType="vertical"></nz-divider>
+          <a
+            nz-button
+            nzType="default"
+            nzDanger
+            (click)="deleteTask(task.id ?? 0)"
+            >Excluir</a
+          >
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>
